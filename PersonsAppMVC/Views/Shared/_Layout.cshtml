@@ -27,7 +27,7 @@
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false"><i class="fas fa-users-cog"></i> Usuários</a>
                             <div class="dropdown-menu">
                               <a class="dropdown-item" asp-area="" asp-controller="User" asp-action="UsersList"><i class="fas fa-users"></i>&ensp;Listar</a>
-                              <a class="dropdown-item" href="#"><i class="fas fa-user-plus"></i>&ensp;Adicionar</a>
+                              <a class="dropdown-item" asp-area="" asp-controller="User" asp-action="AddUser"><i class="fas fa-user-plus"></i>&ensp;Adicionar</a>
                             </div>
                           </li>
 
@@ -51,6 +51,7 @@
             &copy; 2022 - DevNet - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidade</a>
         </div>
     </footer>
+    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/b24b53353a.js" crossorigin="anonymous"></script>

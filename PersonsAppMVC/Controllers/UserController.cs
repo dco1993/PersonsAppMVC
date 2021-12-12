@@ -5,25 +5,62 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PersonsAppMVC.Models;
-
+using System.Text;
+using ClassLibrary.Models;
 
 namespace PersonsAppMVC.Controllers {
     public class UserController : Controller {
 
-        string url = "https://personsapi.azurewebsites.net/api/users";
+        string url = "https://personsapi.azurewebsites.net/api/users/";
 
         // GET: UserController
         public async Task<IActionResult> UsersList() {
 
-            List<PersonsModel> persons = new List<PersonsModel>();
+            List<UserModel> persons = new List<UserModel>();
 
             using (var httpClient = new HttpClient()) {
                 using (var result = await httpClient.GetAsync(url)) {
                     string response = await result.Content.ReadAsStringAsync();
-                    persons = JsonConvert.DeserializeObject<List<PersonsModel>>(response);
+                    persons = JsonConvert.DeserializeObject<List<UserModel>>(response);
                 }
             }
+
             return View(persons);
+
+        }
+
+        public async Task<IActionResult> GetUser(int id) {
+
+            UserModel user = new UserModel();
+
+            using (var httpClient = new HttpClient()) {
+                using (var result = await httpClient.GetAsync(url + id)) {
+                    string response = await result.Content.ReadAsStringAsync();
+                    user = JsonConvert.DeserializeObject<UserModel>(response);
+                }
+            }
+
+            return View(user);
+
+        }
+
+        public ViewResult AddUser() => View();
+
+        [HttpPost]
+        public async Task<IActionResult> AddUser(PersonsModel user) {
+
+            PersonsModel postedUser = new PersonsModel();
+
+            using ( var httpClient = new HttpClient()) {
+                
+                StringContent stringPost = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                using ( var result = await httpClient.PostAsync(url, stringPost)) {
+
+                    return View();
+
+                }
+            }
+
         }
 
         // GET: UserController/Details/5

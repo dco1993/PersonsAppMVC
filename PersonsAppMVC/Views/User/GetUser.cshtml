@@ -1,0 +1,139 @@
+﻿@model ClassLibrary.Models.UserModel
+
+@{
+    Layout = null;
+}
+
+<div class="container">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Detalhes do produto</h4>
+            </div>
+            <div class="modal-body">
+                
+                <div>
+                    <h4>UserModel</h4>
+                    <hr />
+                    <dl class="row">
+                        <dt class = "col-sm-2">
+                            @Html.DisplayNameFor(model => model.UsrId)
+                        </dt>
+                        <dd class = "col-sm-10">
+                            @Html.DisplayFor(model => model.UsrId)
+                        </dd>
+                        <dt class = "col-sm-2">
+                            @Html.DisplayNameFor(model => model.UsrDtCad)
+                        </dt>
+                        <dd class = "col-sm-10">
+                            @Html.DisplayFor(model => model.UsrDtCad)
+                        </dd>
+                        <dt class = "col-sm-2">
+                            @Html.DisplayNameFor(model => model.UsrNome)
+                        </dt>
+                        <dd class = "col-sm-10">
+                            @Html.DisplayFor(model => model.UsrNome)
+                        </dd>
+                        <dt class = "col-sm-2">
+                            @Html.DisplayNameFor(model => model.UsrSbnome)
+                        </dt>
+                        <dd class = "col-sm-10">
+                            @Html.DisplayFor(model => model.UsrSbnome)
+                        </dd>
+                        <dt class = "col-sm-2">
+                            @Html.DisplayNameFor(model => model.UsrNasci)
+                        </dt>
+                        <dd class = "col-sm-10">
+                            @Html.DisplayFor(model => model.UsrNasci)
+                        </dd>
+                        <dt class = "col-sm-2">
+                            @Html.DisplayNameFor(model => model.UsrEmail)
+                        </dt>
+                        <dd class = "col-sm-10">
+                            @Html.DisplayFor(model => model.UsrEmail)
+                        </dd>
+                        <dt class = "col-sm-2">
+                            @Html.DisplayNameFor(model => model.UsrBio)
+                        </dt>
+                        <dd class = "col-sm-10">
+                            @Html.DisplayFor(model => model.UsrBio)
+                        </dd>
+                    </dl>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="close btn btn-danger"  data-dismiss="modal">Fechar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+@*<div class="modal-dialog">
+<div class="modal-content">
+
+    <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+    <a class="close" data-dismiss="modal" style="cursor: pointer"><span aria-hidden="true">&times;</span></a>
+    </div>
+
+    <div class="modal-body">
+
+    <div>
+        <h4>UserModel</h4>
+        <hr />
+        <dl class="row">
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.UsrId)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.UsrId)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.UsrDtCad)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.UsrDtCad)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.UsrNome)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.UsrNome)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.UsrSbnome)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.UsrSbnome)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.UsrNasci)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.UsrNasci)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.UsrEmail)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.UsrEmail)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.UsrBio)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.UsrBio)
+            </dd>
+        </dl>
+    </div>
+
+    </div>
+
+    <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-primary">Save changes</button>
+    </div>
+
+</div>
+</div>*@

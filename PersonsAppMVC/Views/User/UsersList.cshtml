@@ -1,7 +1,7 @@
-﻿@model IEnumerable<PersonsAppMVC.Models.PersonsModel>
+﻿@model IEnumerable<ClassLibrary.Models.UserModel>
 
 @{
-    ViewData["Title"] = "UsersList";
+    ViewData["Title"] = "Lista de Usuários";
 }
 
 <h1><i class="fas fa-users"></i> Lista de Usuários</h1>
@@ -27,7 +27,7 @@
           <th scope="row">@Html.DisplayFor(modelItem => item.UsrNome)</th>
           <td>@Html.DisplayFor(modelItem => item.UsrSbnome)</td>
           <td>@Html.DisplayFor(modelItem => item.UsrEmail)</td>
-          <td class="text-center"><i class="fas fa-info text-info"></i></td>
+          <td class="text-center"><a class="detail" data-toggle="modal" data-target="#divModal" data-id="@item.UsrId"><i class="fas fa-info text-info"></i></a></td>
           <td class="text-center"><i class="far fa-trash-alt text-danger"></i></td>
         </tr>
         }
@@ -35,63 +35,43 @@
   </tbody>
 </table>
 
-@*<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.UsrId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UsrDtCad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UsrNome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UsrSbnome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UsrNasci)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UsrEmail)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UsrBio)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsrId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsrDtCad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsrNome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsrSbnome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsrNasci)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsrEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsrBio)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
+<div id="divModal" class="modal fade" role="dialog" />
+
+@section scripts{
+    <script>
+        $(function () {
+
+            $(".detail").click(function () {
+
+                var id = $(this).attr("data-id");
+
+                $("#divModal").load("../User/GetUser/" + id, function () {
+
+                    $("#divModal").modal();
+
+                })
+
+            });
+
+            $(".edit").click(function () {
+                var id = $(this).attr("data-id");
+                $("#divModal").load("./Acesso/Edit?id=" + id, function () {
+                    $("#infoModal").modal();
+                })
+            });
+
+            $(".create").click(function () {
+                $("#divModal").load("./Acesso/Create", function () {
+                    $("#divModal").modal();
+                })
+            });
+
+            $("#divModal").on("hidden.bs.modal", function () {
+                $('#divModal').removeData('.modal');
+                $('#divModal .modal-header').html('');
+                $('#divModal .modal-body').html('');
+                $('#divModal .modal-footer').html('');
+            });
+        })
+    </script>
 }
-    </tbody>
-</table>*@
