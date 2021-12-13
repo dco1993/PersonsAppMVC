@@ -10,7 +10,8 @@ namespace PersonsAppMVC.Models {
         [Display(Name = "Sobrenome")]
         public string UsrSbnome { get; set; }
 
-        [Display(Name = "Data de Nascimento")]
+        [Display(Name = "Dt. Nascimento")]
+        [DataType(DataType.Date)]
         public DateTime UsrNasci { get; set; }
 
         [Display(Name = "Email")]
