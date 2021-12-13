@@ -21,7 +21,7 @@ namespace ClassLibrary.Models {
         public string UsrSbnome { get; set; }
 
         [Display(Name = "Dt. Nascimento")]
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime UsrNasci { get; set; }
 
         [Display(Name = "Email")]
