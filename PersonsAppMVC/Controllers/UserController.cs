@@ -6,39 +6,34 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PersonsAppMVC.Models;
 using System.Text;
+using System.Net.Http.Json;
+using ClassLibrary;
 using ClassLibrary.Models;
+using ClassLibrary.Processors;
+
 
 namespace PersonsAppMVC.Controllers {
     public class UserController : Controller {
 
         string url = "https://personsapi.azurewebsites.net/api/users/";
 
-        // GET: UserController
+        [HttpGet]
         public async Task<IActionResult> UsersList() {
 
-            List<UserModel> persons = new List<UserModel>();
+            ApiCaller.InitializeClient();
 
-            using (var httpClient = new HttpClient()) {
-                using (var result = await httpClient.GetAsync(url)) {
-                    string response = await result.Content.ReadAsStringAsync();
-                    persons = JsonConvert.DeserializeObject<List<UserModel>>(response);
-                }
-            }
+            List<UserModel> users = await UserProcessor.GetAllUsers();
 
-            return View(persons);
+            return View(users);
 
         }
 
+        [HttpGet]
         public async Task<IActionResult> GetUser(int id) {
 
-            UserModel user = new UserModel();
+            ApiCaller.InitializeClient();
 
-            using (var httpClient = new HttpClient()) {
-                using (var result = await httpClient.GetAsync(url + id)) {
-                    string response = await result.Content.ReadAsStringAsync();
-                    user = JsonConvert.DeserializeObject<UserModel>(response);
-                }
-            }
+            UserModel user = await UserProcessor.GetUserById(id);
 
             return View(user);
 
@@ -56,6 +51,47 @@ namespace PersonsAppMVC.Controllers {
                 StringContent stringPost = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
                 using ( var result = await httpClient.PostAsync(url, stringPost)) {
 
+                    return View();
+
+                }
+            }
+
+        }
+
+        public async Task<IActionResult> UserUpdate(int id) {
+
+            UserModel user = new UserModel();
+
+            using (var httpClient = new HttpClient()) {
+                using (var result = await httpClient.GetAsync(url + id)) {
+                    string response = await result.Content.ReadAsStringAsync();
+                    user = JsonConvert.DeserializeObject<UserModel>(response);
+                }
+            }
+
+            return View(user);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UserUpdate(UserModel putUser) {
+
+            using (var httpClient = new HttpClient()) {
+
+                var content = new MultipartFormDataContent();
+                content.Add(new StringContent(putUser.UsrId.ToString()), "UsrId");
+                content.Add(new StringContent(putUser.UsrNome), "UsrNome");
+                content.Add(new StringContent(putUser.UsrSbnome), "UsrSbnome");
+                content.Add(new StringContent(putUser.UsrNasci.ToString()), "UsrNasci");
+                content.Add(new StringContent(putUser.UsrEmail), "UsrEmail");
+                content.Add(new StringContent(putUser.UsrBio), "UsrBio");
+
+                var put = JsonConvert.SerializeObject(content);
+
+                using (var result = await httpClient.PutAsJsonAsync(url, content)) {
+                    string apiResponse = await result.Content.ReadAsStringAsync();
+                    ViewBag.Result = "Sucesso!";
+                    
                     return View();
 
                 }
