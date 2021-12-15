@@ -28,7 +28,7 @@
           <td>@Html.DisplayFor(modelItem => item.UsrSbnome)</td>
           <td>@Html.DisplayFor(modelItem => item.UsrEmail)</td>
           <td class="text-center"><a class="detail" data-toggle="modal" data-id="@item.UsrId"><i class="fas fa-info text-info"></i></a></td>
-          <td class="text-center"><i class="far fa-trash-alt text-danger"></i></td>
+          <td class="text-center"><a class="delete" data-toggle="modal" data-id="@item.UsrId"><i class="far fa-trash-alt text-danger"></i></a></td>
         </tr>
         }
 
@@ -73,4 +73,29 @@
         })
 
     </script>
+
+    <div class="container">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-user"></i>&ensp;Deletar Usuário</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+            
+                
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
 }

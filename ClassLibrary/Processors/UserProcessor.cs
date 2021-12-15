@@ -5,6 +5,8 @@ using System.Text;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using ClassLibrary.Models;
+using System.Net.Http.Json;
+using System.Net.Http;
 
 namespace ClassLibrary.Processors {
     public static class UserProcessor {
@@ -61,6 +63,77 @@ namespace ClassLibrary.Processors {
 
             }
         
+        }
+
+        public static async Task<UserModel> CreateUser(UserModel user) {
+
+            using (var cliente = ApiCaller.ApiClient)
+            {
+                var data = JsonConvert.SerializeObject(new
+                {
+                    user.UsrNome,
+                    user.UsrSbnome,
+                    user.UsrNasci,
+                    user.UsrEmail,
+                    user.UsrBio
+                });
+
+                StringContent dataPost = new StringContent(data, Encoding.UTF8, "application/json");
+
+                var postUser = await cliente.PostAsync(url, dataPost);
+
+                if (postUser.IsSuccessStatusCode)
+                {
+                    return user;
+                } else
+                {
+                    throw new Exception(postUser.ReasonPhrase);
+                }
+            }
+        }
+
+        public static async Task<UserModel> UpdateUser(UserModel user)
+        {
+            using (var cliente = ApiCaller.ApiClient)
+            {
+                var data = JsonConvert.SerializeObject(new {
+                    user.UsrId,
+                    user.UsrNome,
+                    user.UsrSbnome,
+                    user.UsrNasci,
+                    user.UsrEmail,
+                    user.UsrBio
+                });
+
+                StringContent putData = new StringContent(data, Encoding.UTF8, "application/json");
+
+                var putUser = await cliente.PutAsync(url, putData);
+
+                if (putUser.IsSuccessStatusCode)
+                {
+                    return user;
+
+                } else {
+                    throw new Exception(putUser.ReasonPhrase);
+                }
+            }
+        }
+
+        public static async Task<string> DeleteUser(int id)
+        {
+            using (var cliente = ApiCaller.ApiClient)
+            {
+                var deleteUser = await cliente.DeleteAsync(url+id);
+
+                if (deleteUser.IsSuccessStatusCode)
+                {
+                    return deleteUser.StatusCode.ToString();
+
+                } else
+                {
+                    throw new Exception(deleteUser.ReasonPhrase);
+                }
+            }
         }
 
     }

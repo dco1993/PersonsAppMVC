@@ -15,8 +15,6 @@ using ClassLibrary.Processors;
 namespace PersonsAppMVC.Controllers {
     public class UserController : Controller {
 
-        string url = "https://personsapi.azurewebsites.net/api/users/";
-
         [HttpGet]
         public async Task<IActionResult> UsersList() {
 
@@ -42,117 +40,50 @@ namespace PersonsAppMVC.Controllers {
         public ViewResult AddUser() => View();
 
         [HttpPost]
-        public async Task<IActionResult> AddUser(PersonsModel user) {
+        public async Task<IActionResult> AddUser(UserModel user) {
 
-            PersonsModel postedUser = new PersonsModel();
+            ApiCaller.InitializeClient();
 
-            using ( var httpClient = new HttpClient()) {
-                
-                StringContent stringPost = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-                using ( var result = await httpClient.PostAsync(url, stringPost)) {
+            var postRequest = await UserProcessor.CreateUser(user);
 
-                    return View();
-
-                }
-            }
+            return View();
 
         }
 
+        [HttpGet]
         public async Task<IActionResult> UserUpdate(int id) {
 
-            UserModel user = new UserModel();
+            ApiCaller.InitializeClient();
 
-            using (var httpClient = new HttpClient()) {
-                using (var result = await httpClient.GetAsync(url + id)) {
-                    string response = await result.Content.ReadAsStringAsync();
-                    user = JsonConvert.DeserializeObject<UserModel>(response);
-                }
-            }
+            UserModel user = await UserProcessor.GetUserById(id);
 
             return View(user);
 
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> UserUpdate(UserModel putUser) {
 
-            using (var httpClient = new HttpClient()) {
+            ApiCaller.InitializeClient();
 
-                var content = new MultipartFormDataContent();
-                content.Add(new StringContent(putUser.UsrId.ToString()), "UsrId");
-                content.Add(new StringContent(putUser.UsrNome), "UsrNome");
-                content.Add(new StringContent(putUser.UsrSbnome), "UsrSbnome");
-                content.Add(new StringContent(putUser.UsrNasci.ToString()), "UsrNasci");
-                content.Add(new StringContent(putUser.UsrEmail), "UsrEmail");
-                content.Add(new StringContent(putUser.UsrBio), "UsrBio");
+            var putRequest = await UserProcessor.UpdateUser(putUser);
 
-                var put = JsonConvert.SerializeObject(content);
-
-                using (var result = await httpClient.PutAsJsonAsync(url, content)) {
-                    string apiResponse = await result.Content.ReadAsStringAsync();
-                    ViewBag.Result = "Sucesso!";
-                    
-                    return View();
-
-                }
-            }
+            return View(putRequest);
 
         }
 
-        // GET: UserController/Details/5
-        public ActionResult Details(int id) {
-            return View();
+        public ViewResult DeleteUser() => View();
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteUser(int id) {
+
+            ApiCaller.InitializeClient();
+
+            string deleteRequest = await UserProcessor.DeleteUser(id);
+
+            return View(deleteRequest);
+
         }
 
-        // GET: UserController/Create
-        //public ActionResult Create() {
-        //    return View();
-        //}
-
-        // POST: UserController/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(IFormCollection collection) {
-        //    try {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch {
-        //        return View();
-        //    }
-        //}
-
-        // GET: UserController/Edit/5
-        //public ActionResult Edit(int id) {
-        //    return View();
-        //}
-
-        // POST: UserController/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection) {
-        //    try {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch {
-        //        return View();
-        //    }
-        //}
-
-        // GET: UserController/Delete/5
-        public ActionResult Delete(int id) {
-            return View();
-        }
-
-        // POST: UserController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection) {
-        //    try {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch {
-        //        return View();
-        //    }
-        //}
     }
 }
