@@ -4,11 +4,9 @@
     ViewData["Title"] = "Lista de Usuários";
 }
 
-<h1><i class="fas fa-users"></i> Lista de Usuários</h1>
+<h1 class="mt-4"><i class="fas fa-users"></i> Lista de Usuários</h1>
 
-<p>
-    <a asp-action="Create"><button class="btn btn-secondary">Adicionar Usuário</button></a>
-</p>
+ <a asp-action="AddUser" class="btn btn-secondary mt-3 mb-5">Adicionar Usuário</a>
 
 <table class="table table-hover table-striped">
   <thead>
@@ -41,6 +39,7 @@
     <script>
 
         $(function () {
+
             $(".detail").click(function () {
                 var id = $(this).attr("data-id");
                 $("#modal").load("../User/GetUser/" + id, function () {
@@ -48,24 +47,9 @@
                 })
             });
 
-            $(".edit").click(function () {
-                var id = $(this).attr("data-id");
-                alert(id);
-                $("#modal").load("Edit?id=" + id, function () {
-                    $("#modal").modal();
-                })
-            });
-
             $(".delete").click(function () {
                 var id = $(this).attr("data-id");
-                alert(id);
-                $("#modal").load("Delete?id=" + id, function () {
-                    $("#modal").modal();
-                })
-            });
-
-           $(".create").click(function () {
-                $("#modal").load("Create", function () {
+                $("#modal").load("../User/DeleteUser/" + id, function () {
                     $("#modal").modal();
                 })
             });
@@ -73,29 +57,4 @@
         })
 
     </script>
-
-    <div class="container">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="fas fa-user"></i>&ensp;Deletar Usuário</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"></span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-            
-                
-
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-            </div>
-
-        </div>
-    </div>
-</div>
 }

@@ -13,14 +13,10 @@
         <form asp-action="UserUpdate">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="UsrId" class="control-label"></label>
-                <input asp-for="UsrId" class="form-control" />
-                <span asp-validation-for="UsrId" class="text-danger"></span>
+                <input asp-for="UsrId" type="hidden" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="UsrDtCad" class="control-label"></label>
-                <input asp-for="UsrDtCad" class="form-control" />
-                <span asp-validation-for="UsrDtCad" class="text-danger"></span>
+                <input asp-for="UsrDtCad" type="hidden" class="form-control" />
             </div>
             <div class="form-group">
                 <label asp-for="UsrNome" class="control-label"></label>

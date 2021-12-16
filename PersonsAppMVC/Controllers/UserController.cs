@@ -44,9 +44,9 @@ namespace PersonsAppMVC.Controllers {
 
             ApiCaller.InitializeClient();
 
-            var postRequest = await UserProcessor.CreateUser(user);
+            UserModel postRequest = await UserProcessor.CreateUser(user);
 
-            return View();
+            return RedirectToAction("UsersList");
 
         }
 
@@ -61,27 +61,36 @@ namespace PersonsAppMVC.Controllers {
 
         }
 
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> UserUpdate(UserModel putUser) {
 
             ApiCaller.InitializeClient();
 
             var putRequest = await UserProcessor.UpdateUser(putUser);
 
-            return View(putRequest);
+            return RedirectToAction("UsersList");
 
         }
 
-        public ViewResult DeleteUser() => View();
+        [HttpGet]
+        public async Task<ViewResult> DeleteUser(int id) {
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteUser(int id) {
+            ApiCaller.InitializeClient();
+            
+            UserModel user = await UserProcessor.GetUserById(id);
+            
+            return View(user);
+        
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(UserModel user) {
 
             ApiCaller.InitializeClient();
 
-            string deleteRequest = await UserProcessor.DeleteUser(id);
+            string deleteRequest = await UserProcessor.DeleteUser(user.UsrId);
 
-            return View(deleteRequest);
+            return RedirectToAction("UsersList");
 
         }
 
